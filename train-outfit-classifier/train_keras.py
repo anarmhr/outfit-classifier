@@ -20,6 +20,7 @@ train_log_file = open(model_path + '/train_log.txt', 'a+')
 sys.stdout = train_log_file
 sys.stderr = train_log_file
 
+logger.add(model_path + '/train_log.txt')
 logger.info('Read data: ./data/data.csv')
 dataset = ImageDataset(pd.read_csv('data/data.csv').sample(frac=0.001, random_state=42))
 
@@ -30,20 +31,15 @@ model = tf.keras.Sequential(DEFAULT_LAYERS)
 opt = Adam(lr=0.000001)
 model.compile(optimizer=opt, loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=['accuracy'])
 
-logger.info('Train in progress...')
+logger.info('Training started. # Epochs = 1')
 results = model.fit(data['train_images'], data['train_labels'], epochs=1,
                     validation_data=(data['val_images'], data['val_labels']))
-
-acc = results.history['accuracy']
-val_acc = results.history['val_accuracy']
-loss = results.history['loss']
-val_loss = results.history['val_loss']
-
-epochs_range = range(5)
+logger.info('Training finished. Evaluating model...')
 
 test_loss, test_acc = model.evaluate(data['test_images'],  data['test_labels'], verbose=2)
 
 print('ACCURACY', test_acc)
+logger.info('Test loss: {}, test accuracy: {}', test_loss, test_acc)
 
 model.save(model_path + '/model')
 with open(model_path + '/epoch_results.json', 'w') as results_log_file:

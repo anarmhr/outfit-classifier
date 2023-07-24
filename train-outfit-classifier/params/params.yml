@@ -1,0 +1,2 @@
+image-directory: ./datasets/deep_fashion/img
+data-file: ./datasets/deep_fashion/data.csv

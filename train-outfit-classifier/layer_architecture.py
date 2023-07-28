@@ -1,22 +1,26 @@
-from keras.layers import Conv2D, MaxPool2D, Dropout, Flatten, Dense, MaxPooling2D, GlobalAveragePooling2D
+
+from tensorflow.python.keras.layers import Conv2D, MaxPool2D, Dropout, Flatten, Dense, MaxPooling2D, GlobalAveragePooling2D
+
+
+
 
 DEFAULT_LAYERS = [
-    Conv2D(32, 3, padding="same", activation="relu", input_shape=(256, 256, 3)),
-    MaxPool2D(),
-    Conv2D(32, 3, padding="same", activation="relu"),
-    MaxPool2D(),
+    Conv2D(32, (3, 3), padding="same", activation="relu", input_shape=(64, 64, 3)),
+    MaxPool2D(2, 2),
+    Conv2D(32, (3, 3), padding="same", activation="relu"),
+    MaxPool2D(2, 2),
     Conv2D(64, 3, padding="same", activation="relu"),
     MaxPool2D(),
     Dropout(0.4),
     Flatten(),
-    Dense(256, activation="relu"),
-    Dense(44, activation="softmax")
+    Dense(128, activation="relu"),
+    Dense(44, activation="softmax"),
 ]
 
 ALEX_NET = [
     Conv2D(96, kernel_size=(11, 11), strides=4,
            padding='valid', activation='relu',
-           input_shape=(256, 256, 3),
+           input_shape=(64, 64, 3),
            kernel_initializer='he_normal'),
 
     MaxPooling2D(pool_size=(3, 3), strides=(2, 2),
@@ -44,5 +48,7 @@ ALEX_NET = [
     Dense(4096, activation='relu'),
     Dense(4096, activation='relu'),
     Dense(1000, activation='relu'),
-    Dense(46, activation='softmax') # n_classes
+    Dense(44, activation='softmax') # n_classes
 ]
+
+

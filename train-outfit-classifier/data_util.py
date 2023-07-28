@@ -44,13 +44,13 @@ class ImageDataset:
         train_data, val_data = \
             train_test_split(train_data, test_size=0.2)
 
-        train_images = np.array([np.asarray(keras.utils.load_img ('data/img/%s' % path, target_size=(256, 256))) for path in train_data['path']]) / 255
+        train_images = np.array([np.asarray(keras.utils.load_img ('data/img/%s' % path, target_size=(64, 64))) for path in train_data['path']]) / 255
         train_labels = np.array(train_data['label'])
 
-        val_images = np.array([np.asarray(keras.utils.load_img('data/img/%s' % path, target_size=(256, 256))) for path in val_data['path']]) / 255
+        val_images = np.array([np.asarray(keras.utils.load_img('data/img/%s' % path, target_size=(64, 64))) for path in val_data['path']]) / 255
         val_labels = np.array(val_data['label'])
 
-        test_images = np.array([np.asarray(keras.utils.load_img('data/img/%s' % path, target_size=(256, 256))) for path in test_data['path']]) / 255
+        test_images = np.array([np.asarray(keras.utils.load_img('data/img/%s' % path, target_size=(64, 64))) for path in test_data['path']]) / 255
         test_labels = np.array(test_data['label'])
 
         return {'train_images': train_images, 'train_labels': train_labels,

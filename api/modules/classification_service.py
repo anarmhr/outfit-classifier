@@ -10,17 +10,23 @@ import os
 
 import sys
 sys.path.append('../../train-outfit-classifier')
+sys.path.append('../../color-detector')
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 
 from image_util import download_image, base64_to_image
+
+from color_detector import fetch_colors
+
+CATEGORY_FILE_PATH = '../train-outfit-classifier/data/classes.csv'
 
 
 class Classifier:
     def __init__(self):
         df = None
         try:
-            df = pd.read_csv('../train-outfit-classifier/data/classes.csv')
+            df = pd.read_csv(CATEGORY_FILE_PATH)
         except Exception as e:
             logger.error('Error occurred while reading classes file: {}', str(e))
             quit(1)
@@ -52,6 +58,12 @@ class Classifier:
     def __get_latest_model(self):
         model_paths = [path.split()[1] + ' ' + path.split()[2] for path in os.listdir('models/')]
         return str(max([datetime.strptime(path, '%Y-%m-%d %H:%M:%S.%f') for path in model_paths]))
+
+
+class ColorDetector:
+    def detect_colors(self):
+        return fetch_colors(None)
+
 
 
 classifier = Classifier()

@@ -1,0 +1,45 @@
+# file paths
+
+data-path: ./data/data.csv
+model-dir: "./models/Model %s"
+model-save-path: "{{model-dir}}/model"
+train-log-path: "{{model-dir}}/train.log"
+epoch-result-path: "{{model-dir}}/epoch_results.json"
+model-summary-path: "{{model-dir}}/model_summary.txt"
+pretrained-model-path: None
+
+# pre-processing
+
+skip-verification: false
+remove-small-classes: false
+classes: 42
+min-test-class-samples: 10
+
+# training parameters
+
+layer-architecture-index: 0
+
+input-shape:
+  - 256
+  - 256
+
+test-size: 0.2
+random-state: 42
+
+learning-rate: 0.00001
+batch-size: 100
+epochs: 1
+
+# augmentation options
+
+rescale: 0.004
+rotation-range: 20
+width-shift-range: 0.2
+height-shift-range: 0.2
+shear-range: 0.2
+zoom-range: 0.2
+horizontal-flip: True
+vertical-flip: True
+brightness-range:
+  - 0.5
+  - 1.5

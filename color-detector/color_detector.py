@@ -15,7 +15,6 @@ def img_recenter(img, height, width):
     return img[(height//4):(3*height//4), (width//4):(3*width//4), :]
 
 def rgb_to_name(rgb_tuple):
-    # a dictionary of all the hex and their respective names in css3
     css3_db = CSS3_HEX_TO_NAMES
     names = []
     rgb_values = []

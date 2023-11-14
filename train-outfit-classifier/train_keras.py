@@ -7,7 +7,7 @@ import tensorflow as tf
 import json
 import argparse
 
-from keras.optimizers import Adam
+#from keras.optimizers import Adam
 from keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 
@@ -47,8 +47,8 @@ test_generator = data_generator['test-generator']
 # build model
 model = tf.keras.Sequential(layer_architecture.layer_array[params['layer-architecture-index']])
 
-opt = Adam(lr=params['learning-rate'])
-model.compile(optimizer=opt, loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=['accuracy'])
+#opt = Adam(lr=params['learning-rate'])
+model.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=['accuracy'])
 
 # train model
 logger.info('Training started. Epochs: {}', params['epochs'])

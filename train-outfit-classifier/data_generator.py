@@ -1,7 +1,8 @@
 import random
 
 import pandas as pd
-from keras.preprocessing.image import ImageDataGenerator
+import tensorflow as tf
+#from tf.keras.preprocessing.image import ImageDataGenerator
 from loguru import logger
 from sklearn.model_selection import train_test_split
 
@@ -15,8 +16,8 @@ class DataGenerator:
 
         skip = sorted(random.sample(range(1, 10000), 10000 - 20))
 
-        print('SKIP', skip)
-        image_data = pd.read_csv(self.params['data-path'], usecols=['path', 'label'], skiprows=skip)
+        #print('SKIP', skip)
+        image_data = pd.read_csv(self.params['data-path'], usecols=['path', 'label'])
 
         image_data['path'] = './data/img/' + image_data['path']
 
@@ -24,7 +25,7 @@ class DataGenerator:
                                                  test_size=self.params['test-size'],
                                                  random_state=self.params['random-state'])
         print(train_data)
-        data_generator = ImageDataGenerator(
+        data_generator = tf.keras.preprocessing.image.ImageDataGenerator(
             rescale=self.params['rescale'],
             rotation_range=self.params['rotation-range'],
             width_shift_range=self.params['width-shift-range'],

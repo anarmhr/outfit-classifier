@@ -7,9 +7,9 @@ import tensorflow as tf
 import json
 import argparse
 
-from keras.optimizers import Adam
-from keras.preprocessing.image import ImageDataGenerator
-from sklearn.model_selection import train_test_split
+#from keras.optimizers import Adam
+#from keras.preprocessing.image import ImageDataGenerator
+#from sklearn.model_selection import train_test_split
 
 import layer_architecture
 import pandas as pd
@@ -20,6 +20,10 @@ from loguru import logger
 from data_generator import DataGenerator
 
 import os
+
+tf.config.experimental.set_visible_devices(tf.config.list_physical_devices('GPU'))
+sess = tf.Session(config=tf.ConfigProto(
+      allow_soft_placement=True, log_device_placement=True))
 
 with open('./params/train-keras-params.yml', 'r') as params_file:
     params = yaml.safe_load(params_file)
@@ -47,8 +51,8 @@ test_generator = data_generator['test-generator']
 # build model
 model = tf.keras.Sequential(layer_architecture.layer_array[params['layer-architecture-index']])
 
-opt = Adam(lr=params['learning-rate'])
-model.compile(optimizer=opt, loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=['accuracy'])
+#opt = Adam(lr=params['learning-rate'])
+model.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=['accuracy'])
 
 # train model
 logger.info('Training started. Epochs: {}', params['epochs'])

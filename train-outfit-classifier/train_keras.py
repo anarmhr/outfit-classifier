@@ -38,27 +38,26 @@ arg_parser.add_argument('--data', '-d', default=params['data-path'], help='Data 
 
 os.mkdir(params['model-dir'])
 logger.add(params['train-log-path'])
-
-# generate data
-data_generator = DataGenerator(params).generate_data()
-train_generator = data_generator['train-generator']
-test_generator = data_generator['test-generator']
-
-# build model
-model = tf.keras.Sequential(layer_architecture.layer_array[params['layer-architecture-index']])
-
-#opt = Adam(lr=params['learning-rate'])
-model.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=['accuracy'])
-
-# train model
-logger.info('Training started. Epochs: {}', params['epochs'])
 with tf.device('/device:GPU:0'):
+    # generate data
+    data_generator = DataGenerator(params).generate_data()
+    train_generator = data_generator['train-generator']
+    test_generator = data_generator['test-generator']
+
+    # build model
+    model = tf.keras.Sequential(layer_architecture.layer_array[params['layer-architecture-index']])
+
+    #opt = Adam(lr=params['learning-rate'])
+    model.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=['accuracy'])
+
+    # train model
+    logger.info('Training started. Epochs: {}', params['epochs'])
     results = model.fit(train_generator, epochs=params['epochs'], steps_per_epoch=len(train_generator), verbose=1)
 
-logger.info('Training finished. Evaluating model...')
+    logger.info('Training finished. Evaluating model...')
 
-test_loss, test_acc = model.evaluate(test_generator, verbose=2)
-logger.info('Test loss: {}, test accuracy: {}', test_loss, test_acc)
+    test_loss, test_acc = model.evaluate(test_generator, verbose=2)
+    logger.info('Test loss: {}, test accuracy: {}', test_loss, test_acc)
 
 model.save(params['model-save-path'], save_format='tf')
 

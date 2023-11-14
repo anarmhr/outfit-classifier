@@ -7,7 +7,7 @@ from tensorflow.python.keras.layers import Conv2D, MaxPool2D, Dropout, Flatten, 
 
 layer_array = [
     [
-        Conv2D(32, (3, 3), padding="same", activation="relu", input_shape=(224, 224, 3)),
+        Conv2D(32, (3, 3), padding="same", activation="relu", input_shape=(256, 256, 3)),
         MaxPool2D(2, 2),
         Conv2D(32, (3, 3), padding="same", activation="relu"),
         MaxPool2D(2, 2),

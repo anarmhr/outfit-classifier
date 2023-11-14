@@ -52,7 +52,8 @@ model.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentro
 
 # train model
 logger.info('Training started. Epochs: {}', params['epochs'])
-results = model.fit(train_generator, epochs=params['epochs'], steps_per_epoch=len(train_generator), verbose=1)
+with tf.device('/device:GPU:0'):
+    results = model.fit(train_generator, epochs=params['epochs'], steps_per_epoch=len(train_generator), verbose=1)
 
 logger.info('Training finished. Evaluating model...')
 
